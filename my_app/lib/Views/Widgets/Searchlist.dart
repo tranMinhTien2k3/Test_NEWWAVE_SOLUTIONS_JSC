@@ -21,22 +21,27 @@ class _SearchlistState extends State<Searchlist> {
       itemCount: widget.items.length,
       itemBuilder: (context, index) {
         final Address item = widget.items[index];
-        return Container(
-          height: 70.0,
-          child: ListTile(
-            title: highlightKeyword(item.label, widget.keyword),
-            leading: const Icon(Icons.location_on_outlined),
-            trailing: IconButton(
-              icon: const Icon(Icons.directions),
-              onPressed: () {
-                Openmap.openGoogleMaps(
-                  item.latitude,
-                  item.longitude,
-                );
-              },
+        return Column(
+          children: [
+            SizedBox(
+              height: 70.0,
+              child: ListTile(
+                title: highlightKeyword(item.label, widget.keyword),
+                leading: const Icon(Icons.location_on_outlined),
+                trailing: IconButton(
+                  icon: const Icon(Icons.directions),
+                  onPressed: () {
+                    Openmap.openGoogleMaps(
+                      item.latitude,
+                      item.longitude,
+                    );
+                  },
+                ),
+                tileColor: Colors.white,
+              ),
             ),
-            tileColor: Colors.white,
-          ),
+            const SizedBox(height: 10),
+          ],
         );
       },
     );
