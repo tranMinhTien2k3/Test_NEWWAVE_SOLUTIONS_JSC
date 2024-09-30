@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:my_app/Model/Address.dart';
 
 class Api {
-  final String apiKey = 'o6qocf7QAZWmlgLaadqtitvHgfIpuwBSyBjGR5n8Kqw';
+  final String apiKey = dotenv.env['API_KEY']!;
 
   Future<List<Address>> fetchAddresses(String query) async {
     final encodedQuery = Uri.encodeComponent(query);
