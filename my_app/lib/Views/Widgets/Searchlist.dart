@@ -17,6 +17,9 @@ class Searchlist extends StatefulWidget {
 class _SearchlistState extends State<Searchlist> {
   @override
   Widget build(BuildContext context) {
+    if (widget.keyword.isEmpty) {
+      return const SizedBox();
+    }
     return ListView.builder(
       itemCount: widget.items.length,
       itemBuilder: (context, index) {

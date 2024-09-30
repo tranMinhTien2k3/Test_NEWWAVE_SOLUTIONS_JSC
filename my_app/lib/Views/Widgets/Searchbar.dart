@@ -84,6 +84,7 @@ class _SearchbarState extends State<Searchbar> {
                     icon: const Icon(Icons.clear),
                     onPressed: () {
                       _searchController.clear();
+                      widget.onSearch('');
                       setState(() {});
                     },
                   )
