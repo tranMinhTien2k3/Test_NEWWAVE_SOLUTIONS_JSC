@@ -1,39 +1,35 @@
 import 'package:flutter/material.dart';
 
 class Searchlist extends StatefulWidget {
-  const Searchlist({super.key});
+  final List<String> items;
+
+  const Searchlist({super.key, required this.items});
 
   @override
   State<Searchlist> createState() => _SearchlistState();
 }
 
 class _SearchlistState extends State<Searchlist> {
-  final List<String> _items = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-  ];
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: _items
-          .map(
-            (item) => Container(
-              height: 70.0,
-              child: ListTile(
-                title: Text(item),
-                leading: const Icon(Icons.location_on_outlined),
-                trailing: IconButton(
-                  icon: const Icon(Icons.directions),
-                  onPressed: () {},
-                ),
-                tileColor: Colors.white,
-              ),
+    return ListView.builder(
+      itemCount: widget.items.length,
+      itemBuilder: (context, index) {
+        final item = widget.items[index];
+        return Container(
+          height: 70.0,
+          child: ListTile(
+            title: Text(item),
+            leading: const Icon(Icons.location_on_outlined),
+            trailing: IconButton(
+              icon: const Icon(Icons.directions),
+              color: Colors.grey.shade400,
+              onPressed: () {},
             ),
-          )
-          .toList(),
+            tileColor: Colors.white,
+          ),
+        );
+      },
     );
   }
 }

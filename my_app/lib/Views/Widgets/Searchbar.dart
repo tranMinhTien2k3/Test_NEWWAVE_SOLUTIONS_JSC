@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Searchbar extends StatefulWidget {
-  const Searchbar({super.key});
+  final Function(String) onSearch;
+
+  const Searchbar({super.key, required this.onSearch});
 
   @override
   State<Searchbar> createState() => _SearchbarState();
@@ -9,6 +11,21 @@ class Searchbar extends StatefulWidget {
 
 class _SearchbarState extends State<Searchbar> {
   final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(() {
+      widget.onSearch(_searchController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +40,7 @@ class _SearchbarState extends State<Searchbar> {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -41,10 +58,10 @@ class _SearchbarState extends State<Searchbar> {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
-            prefixIcon: Icon(Icons.search),
+            prefixIcon: const Icon(Icons.search),
             suffixIcon: _searchController.text.isNotEmpty
                 ? IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                     onPressed: () {
                       _searchController.clear();
                       setState(() {});

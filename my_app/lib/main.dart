@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/ViewModel/Addressview.dart';
 import 'package:my_app/Views/Screens/Hompage.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AddressViewModel()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
