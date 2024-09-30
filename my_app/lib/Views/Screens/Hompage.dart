@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:my_app/Model/Address.dart';
 import 'package:my_app/ViewModel/Addressview.dart';
 import 'package:my_app/Views/Widgets/SearchBar.dart';
@@ -18,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AddressViewModel>(context, listen: false).fetchAddresses();
+      Provider.of<AddressViewModel>(context, listen: false).fetchAddresses('');
     });
   }
 
@@ -30,7 +32,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Searchbar(onSearch: (query) async {
             await Provider.of<AddressViewModel>(context, listen: false)
-                .fetchAddresses();
+                .fetchAddresses(query);
             List<Address> filteredAddresses =
                 Provider.of<AddressViewModel>(context, listen: false)
                     .addresses
@@ -46,8 +48,17 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Consumer<AddressViewModel>(
               builder: (context, viewModel, child) {
+                final addressesToDisplay = _searchResults.isNotEmpty
+                    ? _searchResults
+                    : viewModel.addresses;
+                if (viewModel.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (viewModel.error != null) {
+                  return const Center();
+                }
                 return Searchlist(
-                    items: viewModel.addresses.map((a) => a.label).toList());
+                    items: addressesToDisplay.map((a) => a.label).toList());
               },
             ),
           ),

@@ -1,16 +1,23 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import 'package:my_app/Model/Address.dart';
 
 class Api {
-  final String apiUrl =
-      'https://geocode.search.hereapi.com/v1/geocode?q=240+Washington+St.%2C+Boston&limit=4&apiKey=o6qocf7QAZWmlgLaadqtitvHgfIpuwBSyBjGR5n8Kqw';
+  final String apiKey = 'o6qocf7QAZWmlgLaadqtitvHgfIpuwBSyBjGR5n8Kqw';
 
-  Future<List<Address>> fetchAddresses() async {
+  Future<List<Address>> fetchAddresses(String query) async {
+    final encodedQuery = Uri.encodeComponent(query);
+    final String apiUrl =
+        'https://geocode.search.hereapi.com/v1/geocode?q=$encodedQuery&limit=4&apiKey=$apiKey&country=VN';
+
     final response = await http.get(Uri.parse(apiUrl));
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonResponse = json.decode(response.body);
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      print(decodedResponse);
+      final Map<String, dynamic> jsonResponse = json.decode(decodedResponse);
       final List<dynamic> items = jsonResponse['items'];
       return items.map<Address>((item) {
         return Address.fromJson(item);

@@ -23,7 +23,6 @@ class _SearchlistState extends State<Searchlist> {
             leading: const Icon(Icons.location_on_outlined),
             trailing: IconButton(
               icon: const Icon(Icons.directions),
-              color: Colors.grey.shade400,
               onPressed: () {},
             ),
             tileColor: Colors.white,

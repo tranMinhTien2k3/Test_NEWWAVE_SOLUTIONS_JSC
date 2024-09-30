@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:my_app/ViewModel/Addressview.dart';
 import 'package:my_app/Views/Screens/Hompage.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(
