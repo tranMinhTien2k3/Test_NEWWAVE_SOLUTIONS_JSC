@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Address> _searchResults = [];
+  String _s = "";
   @override
   void initState() {
     super.initState();
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
 
             setState(() {
               _searchResults = filteredAddresses;
+              _s = query;
             });
           }),
           Expanded(
@@ -59,7 +61,8 @@ class _HomePageState extends State<HomePage> {
                 }
                 return Searchlist(
                     items:
-                        addressesToDisplay.map((address) => address).toList());
+                        addressesToDisplay.map((address) => address).toList(),
+                    keyword: _s);
               },
             ),
           ),
