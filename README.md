@@ -1,4 +1,3 @@
-<h2>Sản phẩm Demo</h2>
-<video width="640" height="360" controls>
-  <source src="Demo.mp4" type="video/mp4">
-</video>
+## Demon
+
+[Click here to watch the demo video](https://drive.google.com/file/d/1LwCxZUKOD8jII1MHpTQmiPmR9_13jwFf/view?usp=drive_link)
