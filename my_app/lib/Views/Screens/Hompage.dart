@@ -58,7 +58,8 @@ class _HomePageState extends State<HomePage> {
                   return const Center();
                 }
                 return Searchlist(
-                    items: addressesToDisplay.map((a) => a.label).toList());
+                    items:
+                        addressesToDisplay.map((address) => address).toList());
               },
             ),
           ),
