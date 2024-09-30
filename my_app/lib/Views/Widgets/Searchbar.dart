@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/Utils/Debouncesearch.dart';
 
 class Searchbar extends StatefulWidget {
   final Function(String) onSearch;
@@ -11,13 +12,26 @@ class Searchbar extends StatefulWidget {
 
 class _SearchbarState extends State<Searchbar> {
   final TextEditingController _searchController = TextEditingController();
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
     _searchController.addListener(() {
-      widget.onSearch(_searchController.text);
+      _handleSearch(_searchController.text);
     });
+  }
+
+  Future<void> _handleSearch(String query) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await debounceSearch((searchQuery) {
+      widget.onSearch(searchQuery);
+      setState(() {
+        _isLoading = false;
+      });
+    }, query);
   }
 
   @override
@@ -37,9 +51,7 @@ class _SearchbarState extends State<Searchbar> {
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
+              color: Colors.grey.withOpacity(0.1),
               offset: const Offset(0, 3),
             ),
           ],
@@ -58,7 +70,15 @@ class _SearchbarState extends State<Searchbar> {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
-            prefixIcon: const Icon(Icons.search),
+            prefixIcon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 4.0))
+                  : const Icon(Icons.search),
+            ),
             suffixIcon: _searchController.text.isNotEmpty
                 ? IconButton(
                     icon: const Icon(Icons.clear),

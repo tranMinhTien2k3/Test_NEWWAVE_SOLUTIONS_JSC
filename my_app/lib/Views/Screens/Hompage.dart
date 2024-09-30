@@ -53,12 +53,12 @@ class _HomePageState extends State<HomePage> {
                 final addressesToDisplay = _searchResults.isNotEmpty
                     ? _searchResults
                     : viewModel.addresses;
-                if (viewModel.isLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (viewModel.error != null) {
-                  return const Center();
-                }
+                // if (viewModel.isLoading) {
+                //   return const Center(child: CircularProgressIndicator());
+                // }
+                // if (viewModel.error != null) {
+                //   return const Center();
+                // }
                 return Searchlist(
                     items:
                         addressesToDisplay.map((address) => address).toList(),
